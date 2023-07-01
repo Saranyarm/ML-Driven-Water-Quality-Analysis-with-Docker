@@ -1,0 +1,103 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Algorithm Comparison</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 25%;
+            align-content: center;
+            border: 1px solid black;
+        }
+
+        th, td {
+            text-align: left;
+            padding: 8px;
+            border: 1px solid black;
+        }
+
+        tr {
+            color: white;
+        }
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        form {
+            max-width: 400px;
+            margin: 30px auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            color: #398495;
+        }
+        .center-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh; /* Adjust this value if needed */
+    }
+    </style>
+</head>
+<body>
+    <h1>Algorithm Comparison</h1>
+
+    <form method="POST" action="/compare">
+        <label for="algorithm">Algorithms:</label><br>
+            <input type="checkbox" name="algorithm" value="random_forest"> Random Forest Classifier<br>
+            <input type="checkbox" name="algorithm" value="knn"> K-Nearest Neighbors Classifier<br>
+            <input type="checkbox" name="algorithm" value="svc"> Support Vector Classifier<br>
+            <input type="submit" value="Compare">
+        </form>
+    </form>
+    {% if accuracies %}
+    <div class="center-container">
+    <table>
+        <tr>
+            <th>Algorithm</th>
+            <th>Accuracy</th>
+        </tr>
+        {% for algorithm, accuracy in accuracies.items() %}
+        <tr>
+            <td>{{ algorithm }}</td>
+            <td>{{ accuracy }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+    <img src="/static/comparison_plot.png" alt="Comparison Plot">
+    {% endif %}
+</body>
+    <!-- {% if metrics %}
+    {% for metric in metrics %}
+    <h2>{{ metric }} Comparison</h2>
+    <table>
+        <tr>
+            <th>Algorithm</th>
+            <th>{{ metric }}</th>
+        </tr>
+        {% for algorithm in metric_results[metric].keys() %}
+        <tr>
+            <td>{{ algorithm }}</td>
+            <td>{{ "%.2f" % metric_results[metric][algorithm] }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+    {% endfor %}
+    {% endif %}
+</body> -->
+</html>
+
+{% endblock %}

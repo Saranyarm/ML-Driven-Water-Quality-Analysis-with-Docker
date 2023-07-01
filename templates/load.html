@@ -1,0 +1,91 @@
+{% extends "base.html" %}
+
+{% block content %}
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Load Dataset</title>
+    <style>
+        /* CSS styles specific to load.html */
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        form {
+            max-width: 400px;
+            margin: 30px auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: #398495;
+        }
+
+        input[type="file"] {
+            display: block;
+            margin-bottom: 20px;
+            color: #398495;
+            border: 2px solid #398495;
+            border-radius: 5px;
+            padding: 8px;
+            background-color: #f1f1f1;
+        }
+
+        input[type="submit"] {
+            background-color: #fff;
+            color: #398495;
+            border: none;
+            padding: 10px 20px;
+            text-align: center;
+            text-decoration: none;
+            display: inline-block;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .message {
+            text-align: center;
+            margin-top: 10px;
+            font-weight: bold;
+            color: #398495;
+        }
+        
+        /* Include the shared styles from base.html */
+        /* Copy the relevant CSS styles from your base.html here */
+        .menu-btn {
+            /* Your styles */
+        }
+
+        .side-bar {
+            /* Your styles */
+        }
+
+        /* Rest of the shared styles */
+    </style>
+</head>
+<body>
+    <h1 style="color: #398495;">Load Dataset</h1>
+    {% if message %}
+    <div class="message">{{ message }}</div>
+    {% endif %}
+    <form action="/load" method="POST" enctype="multipart/form-data">
+        <label for="file">Select a CSV file:</label>
+        <input type="file" id="file" name="file" accept=".csv" required>
+        <input type="submit" value="Load Dataset">
+    </form>
+</body>
+</html>
+{% endblock %}

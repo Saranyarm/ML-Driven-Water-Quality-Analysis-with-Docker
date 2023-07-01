@@ -1,0 +1,78 @@
+{% extends "base.html" %}
+
+{% block content %}
+<html>
+    <head>
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+        <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+
+        h1 {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        form {
+            max-width: 400px;
+            margin: 30px auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            color: #398495;
+        }
+        p {
+            max-width: 400px;
+            margin: 30px auto;
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(15px);
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            color: #fff;  
+        }
+    </style>
+    </head>
+    <body>
+    <h1 style="text-align: center;">Predict</h1>
+
+    <form method="POST" action="/predict">
+        <div class="form-group">
+        {% for attribute in attributes %}
+            <label for="{{ attribute }}">{{ attribute }}:</label>
+            {% if attribute in categorical_columns %}
+                <select name="{{ attribute }}" required class="form-control">
+                    <option value="">Select</option>
+                    {% for category in dataset[attribute].unique() %}
+                        <option value="{{ category }}">{{ category }}</option>
+                    {% endfor %}
+                </select>
+            {% else %}
+                <input type="number" name="{{ attribute }}" step="0.01" required class="form-control">
+            {% endif %}
+            <br><br>
+        {% endfor %}
+        <label for="model">Model:</label>
+        <select name="model" id="model" required class="form-control">
+
+            {% for model in saved_models %}
+                <option value="{{ model }}">{{ model }}</option>
+            {% endfor %}
+
+            {% if current_model_file %}
+                    <option value="{{ current_model_file }}">{{ current_model_file }}</option>
+            {% endif %}
+        </select>
+        <br><br>
+        <input type="submit" class="btn btn-primary" value="Predict">
+    </div>
+    </form>
+    {% if prediction %}
+        <h2 style="text-align: center;">Prediction: {{ prediction }}</h2>
+    {% endif %}
+</body>
+</html>
+{% endblock %}
